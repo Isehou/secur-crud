@@ -1,6 +1,7 @@
 package org.example.securcrud.services;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.securcrud.model.Role;
 import org.example.securcrud.repositories.RoleRepository;
@@ -9,8 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
-@Slf4j
+@RequiredArgsConstructor
 public class RoleService {
     private RoleRepository roleRepository;
 
