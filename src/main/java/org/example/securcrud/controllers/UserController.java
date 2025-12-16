@@ -1,10 +1,11 @@
 package org.example.securcrud.controllers;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.example.securcrud.model.User;
-import org.example.securcrud.services.UserService;
+import org.example.securcrud.services.UserDetailsServiceImpl;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
-    private UserService userService;
+    private final UserDetailsServiceImpl userService;
 
     @GetMapping("/{id}")
     public User getUserById(@PathVariable Long id) {
@@ -26,6 +27,12 @@ public class UserController {
 
     @PostMapping
     public User save(@RequestBody User user) {
-        return userService.addUser(user);
+        try {
+            return userService.addUser(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+
     }
 }
